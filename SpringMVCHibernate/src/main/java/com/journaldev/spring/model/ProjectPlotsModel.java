@@ -1,0 +1,39 @@
+package com.journaldev.spring.model;
+
+public class ProjectPlotsModel {
+
+	private String projectPlotId;
+	private String projectId;
+	private String plotName;
+	private Long plotSize;
+	
+	
+	
+	public String getProjectPlotId() {
+		return projectPlotId;
+	}
+	public void setProjectPlotId(String projectPlotId) {
+		this.projectPlotId = projectPlotId;
+	}
+	public String getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+	public String getPlotName() {
+		return plotName;
+	}
+	public void setPlotName(String plotName) {
+		this.plotName = plotName;
+	}
+	public Long getPlotSize() {
+		return plotSize;
+	}
+	public void setPlotSize(Long plotSize) {
+		this.plotSize = plotSize;
+	}
+
+
+	
+}
