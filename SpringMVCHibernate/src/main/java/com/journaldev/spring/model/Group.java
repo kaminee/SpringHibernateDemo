@@ -14,7 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -77,10 +76,10 @@ public class Group {
 		return id;
 	}
 
-	@Override
+/*	@Override
 	public String toString() {
 		return "Group [id=" + id + ", name=" + name + ", users=" + users + "]";
-	}
+	}*/
  
     // other getters and setters...
     

@@ -24,7 +24,7 @@ import com.journaldev.spring.dao.UserDAO;
 import com.journaldev.spring.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:test-servlet.xml"})
+//@ContextConfiguration({"classpath:test-servlet.xml"})
 public class UserControllerTest {
 
     private UserDAO userDAO;

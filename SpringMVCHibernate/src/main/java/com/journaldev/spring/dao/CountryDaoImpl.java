@@ -29,6 +29,7 @@ public class CountryDaoImpl implements CountryDao {
 	public List<Country> fetchAllCountries() {
 		
 		System.out.println("\n\n\t =====sessionFactory==>"+sessionFactory);
+		@SuppressWarnings("unchecked")
 		List<Country> listCountries= sessionFactory.getCurrentSession()
 				.createCriteria(Country.class)
 				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY).list();

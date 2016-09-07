@@ -12,7 +12,7 @@ public interface GroupDAO //extends CrudRepository<User, Serializable>
 	
 	Group findByName(String name);
 	
-	void saveGroup(Group group);
+	void saveGroup(Group group,int userId);
 	
 	void updateGroup(Group group);
 	

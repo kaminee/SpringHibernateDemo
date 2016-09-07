@@ -1,18 +1,13 @@
 package com.journaldev.spring;
 
-import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.journaldev.spring.dao.UserDAO;
 import com.journaldev.spring.model.Country;
-import com.journaldev.spring.model.Employee;
 import com.journaldev.spring.model.Group;
-import com.journaldev.spring.model.Meeting;
 import com.journaldev.spring.model.User;
 
 public class Main {
@@ -57,32 +52,32 @@ public class Main {
         session.save(employee1);
 //        session.save(employee2);
 */        
-       /* Country c=new Country();
+        Country c=new Country();
         c.setCountryId(1);
-        Group groupAdmin = new Group("Loyalty Group");
+        Group groupAdmin = new Group("Test Group");
 //        User newUser=userDao.findById(13);
         User user1 = new User();
         user1.setId(15); //        user1.setUsername("HImanci"); //        user1.setEmail("him@mail.com");
         user1.setCountry(c); //        user1.getGroups().add(groupAdmin);
         
-        */
-//        groupAdmin.getUsers().add(user1);
+        
+        groupAdmin.getUsers().add(user1);
         
         
-        User user = (User) session.get(User.class, 15);
+       /* User user = (User) session.get(User.class, 15);
         Group grp = (Group) session.get(Group.class, 25l);
         List<User> listUser = session.createCriteria(User.class).list();
 
         System.out.println("\n\t -"+listUser.size());
         //        listUser.forEach(System.out::println);
-        System.out.println("\n\t ===user==>"+user.getUsername()+"\t =="+grp.getUsers());
+        System.out.println("\n\t ===user==>"+user.getUsername()+"\t =="+grp.getUsers());*/
         
 //        groupAdmin.addUser(user1);
          
          
       
          
-//        session.save(groupAdmin);
+        session.save(groupAdmin);
         session.getTransaction().commit();
         session.close();
     }

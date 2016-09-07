@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.journaldev.spring.dao.GroupDAO;
-import com.journaldev.spring.dao.UserDAO;
-import com.journaldev.spring.model.Country;
 import com.journaldev.spring.model.Group;
 import com.journaldev.spring.model.User;
 
@@ -35,18 +33,13 @@ public class GroupController {
 	@Autowired
 	private GroupDAO groupDAO;
 	
-	@Autowired
-	private UserDAO userDao1;
-	
 	private static final Logger logger =LoggerFactory.getLogger(GroupController.class);
 	
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Group>  listOfGroups() {   
-		System.out.println("\n\t ==listOfUsers=");
 		List<Group> listGroups = groupDAO.list();
-		System.out.println("\n\t ==listOfUsers="+listGroups.size());
-
+		logger.info(""+listGroups.size());
 	    return listGroups;
 	}
 	
@@ -80,19 +73,15 @@ public class GroupController {
 	 
 	  @RequestMapping(value = "", method = RequestMethod.POST, produces="application/json",consumes ="application/json")
 	    public ResponseEntity<Void> createGroup(@RequestBody Group group,    UriComponentsBuilder ucBuilder,HttpServletRequest request) {
-		  System.out.println("\n\n\t ==getUsers=====>"+group.getUsers()+"\t name-"+group.getName()+"\t group-->"+group);		  
+		 logger.info("\n\n\t ==getUsers=====>"+group.getUsers()+"\t name-"+group.getName()+"\t group-->"+group);		  
 		 try{
 			 Group groupAdmin =null;
 			 int userId=0;
 		  for (User userW : group.getUsers()) {
 			 userId=userW.getId();
 			 groupAdmin = new Group(""+group.getName()+"");
-			 User newUser=userDao1.findById(userId);
-				System.out.println("\n\t id---"+newUser.getId()+"\t --ctry-->"+newUser.getCountry().getCountryId());
-				groupAdmin.getUsers().add(newUser);
-				  
 		  }
-		  groupDAO.saveGroup(groupAdmin);
+		  groupDAO.saveGroup(groupAdmin,userId);
 				  
 		 }catch(Exception e){
 			 e.printStackTrace();
@@ -106,12 +95,7 @@ public class GroupController {
 	  
 	   @RequestMapping(value = "/group/", method = RequestMethod.GET)
 	    public ResponseEntity<List<Group>> listAllUsers() {
-		   long startTime=System.currentTimeMillis();
-		   System.out.println("\n\t --first time ===>"+System.currentTimeMillis());
 	        List<Group> groups = groupDAO.list();
-//	        List<Group> user2 = groupDAO.list();
-//	        List<Group> user3 = groupDAO.list();
-	        System.out.println("\n\t -end-time ===>"+(System.currentTimeMillis()-startTime));
 	        if (groups.isEmpty()) {
 	            return new ResponseEntity<List<Group>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
 	        }

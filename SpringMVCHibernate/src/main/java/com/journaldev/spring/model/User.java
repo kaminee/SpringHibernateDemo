@@ -14,12 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Component
@@ -27,7 +24,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "USERS")
 public class User implements Serializable{
-	
 	
 	@Id 
 	@GeneratedValue
@@ -59,7 +55,12 @@ public class User implements Serializable{
 	
 //	@Fetch(FetchMode.SUBSELECT)
 
-	@ManyToMany(targetEntity=Group.class, mappedBy="users",fetch=FetchType.EAGER)
+	/*@ManyToMany(targetEntity=Group.class, mappedBy="users",fetch=FetchType.EAGER)
+	@JsonBackReference*/
+	
+	
+	
+	@ManyToMany(mappedBy="users")
 	@JsonBackReference
 	private Set<Group> groups = new HashSet<Group>();
 
@@ -126,19 +127,12 @@ public class User implements Serializable{
 		this.groups = groups;
 	}
 
-	@Override
+/*	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
 				+ ", address=" + address + ", country=" + country + ", groups=" + groups + "]";
 	}
-
-/*	public long getCountryId() {
-		return countryId;
-	}
-
-	public void setCountryId(long countryId) {
-		this.countryId = countryId;
-	}
 */
+
 	
 }

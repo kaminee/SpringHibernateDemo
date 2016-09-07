@@ -1,7 +1,6 @@
 package com.journaldev.spring;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.journaldev.spring.dao.UserDAO;
-import com.journaldev.spring.dao.UserFunctionalInterface;
 import com.journaldev.spring.model.User;
-import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
@@ -51,7 +48,6 @@ public class UserController {
 	      model.addAttribute("message", "Hello Spring MVC Framework!");
 
 	      return "UserManagement";
-//	      return "S";
 	   }
 	 
 	  @RequestMapping(value = "", method = RequestMethod.POST, produces="application/json",consumes ="application/json")
@@ -66,17 +62,12 @@ public class UserController {
 	  
 	   @RequestMapping(value = "/user/", method = RequestMethod.GET)
 	    public ResponseEntity<List<User>> listAllUsers() {
-		   long startTime=System.currentTimeMillis();
-		   System.out.println("\n\t --first time ===>"+System.currentTimeMillis());
+		   logger.info("\n\t --first time ===>"+System.currentTimeMillis());
 	        List<User> users = userDao.list();
-//	        List<User> user2 = userDao.list();
-	        
-	        
 	     /*   Optional<User> user3 = userDao.findByName("Kaminee",users);
 	        
 	        UserFunctionalInterface greetService2 = (message) ->System.out.println(CONSTANT_MSG + message);
 	        greetService2.sayMessage(user3.get().getUsername());
-	        
 	        
 	        System.out.println("\n\t -end-emial ===>"+(user3.get().getEmail()));*/
 	        if (users.isEmpty()) {
@@ -112,7 +103,7 @@ public class UserController {
 		   public ResponseEntity<User> fetchUserById(@PathVariable("id") long id) {
 		      User currentUser = userDao.findById(id);
 		        if (currentUser==null) {
-		            System.out.println("User with id " + id + " not found");
+		          logger.info("User with id " + id + " not found");
 		            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		        }
 		        return new ResponseEntity<User>(currentUser, HttpStatus.OK);

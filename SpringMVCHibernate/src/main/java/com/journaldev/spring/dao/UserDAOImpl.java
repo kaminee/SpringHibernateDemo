@@ -2,12 +2,13 @@ package com.journaldev.spring.dao;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.journaldev.spring.model.User;
 
 //@Transactional 
+@SuppressWarnings("unchecked")
 @Component
 public class UserDAOImpl implements UserDAO {
-	private static final AtomicInteger counter = new AtomicInteger();
-//	private EntityManagerFactory
 	private SessionFactory sessionFactory;
+	
+	private static final Logger logger =LoggerFactory.getLogger(UserDAOImpl.class);
+
 	public UserDAOImpl(){
 		
 	}
@@ -33,24 +36,22 @@ public class UserDAOImpl implements UserDAO {
 	@Transactional
 //	@Cacheable(value = { "users" })
 	public List<User> list() {
-		System.out.println("\n\t sessionFactory=============>"+sessionFactory);
-		@SuppressWarnings("unchecked")
+		logger.info("\n\t sessionFactory=============>"+sessionFactory);
 		List<User> listUser = sessionFactory.getCurrentSession()
 				.createCriteria(User.class)
 				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY).list();
-			System.out.println("\n\t\tuser====listUser==>"+listUser.size());
+		logger.info("\n\t\tuser====listUser==>"+listUser.size());
 		return listUser;
 	}
 
 	@Override
 	@Transactional
 	public User findById(long id) {
-		System.out.println("\n\n\t ----long id-------->"+id);
+		logger.info("\n\n\t ----long id-------->"+id);
 
 		List<User> users = sessionFactory.getCurrentSession()
 				.createCriteria(User.class)
 				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY).list();
-		System.out.println("\n\n\t ----users-------->"+users.size());
 		for(User user : users){
 			if(user.getId() == id){
 				return user;
@@ -61,7 +62,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public Optional<User> findByName(String name,List<User> users ) {
-		System.out.println("find by nsme=="+name);
+		logger.info("find by nsme=="+name);
 		
 		users.forEach(user->{
 		System.out.println(user.getUsername());
@@ -78,15 +79,6 @@ public class UserDAOImpl implements UserDAO {
 				.findFirst();
 //		userN=users.stream().filter(s -> s.startsWi(name)).sorted().forEach(System.out::println);
 		
-		
-		/*for(User user : users){
-			if(user.getUsername().equalsIgnoreCase(name)){
-				return user;
-			}
-		}
-		
-		
-		return null;*/
 	}
 
 	@Override
@@ -95,9 +87,7 @@ public class UserDAOImpl implements UserDAO {
 	public void saveUser(User user) {
 //		user.setId(5);
 		 Session sessionOne = sessionFactory.openSession();
-		 System.out.println("-------sessionFactory----------"+sessionFactory);
 	      sessionOne.beginTransaction();
-	      System.out.println("\n\n\t saving user --->"+user);
 	      sessionOne.save(user);
 	      sessionOne.getTransaction().commit();
 	      
@@ -106,9 +96,6 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	@Transactional
 	public void updateUser(User user) {
-//		int index = users.indexOf(user);
-//		users.set(index, user);
-//		
 		 Session sessionOne = sessionFactory.openSession();
 	      sessionOne.beginTransaction();
 	      sessionOne.update(user);
@@ -120,18 +107,11 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	@Transactional
 	public void deleteUserById(int id) {
-		// TODO Auto-generated method stub
 		Session session = sessionFactory.openSession();
-
-//        int userid = 2;
-
         try {
             session.beginTransaction();
-
             User user = (User) session.get(User.class, id);
-
             session.delete(user);
-//            session.save(user);
             session.getTransaction().commit();
             
         }
