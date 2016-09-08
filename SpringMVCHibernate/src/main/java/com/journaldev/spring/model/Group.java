@@ -39,7 +39,17 @@ public class Group {
 //    @JsonBackReference
     private Set<User> users = new HashSet<User>();
     
-    public Group() {
+ /*   User usersArr;
+    
+    public User getUsersArr() {
+		return usersArr;
+	}
+
+	public void setUsersArr(User usersArr) {
+		this.usersArr = usersArr;
+	}*/
+
+	public Group() {
     }
  
     public Group(String name) {

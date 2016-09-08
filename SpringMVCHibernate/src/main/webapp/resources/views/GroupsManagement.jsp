@@ -33,8 +33,9 @@
  					 <div class="row">
                           <div class="form-group col-md-12">
                             	  <label class="col-md-2 control-lable" for="file">User</label>
+<!--                                     <select ng-model="ctrl.group.users" name="" class="select input-sm" ng-options="ctr.id as ctr.username for ctr in userArray track by ctr.id" ng-change="GetValue(ctrl.group.users)"> -->
                               
-                   					 <select ng-model="ctrl.group.users" name="" class="select input-sm" ng-options="ctr.id as ctr.username for ctr in userArray track by ctr.id" ng-change="GetValue(ctrl.group.users)">
+                   					 <select ng-model="ctrl.selUser" name="" class="select input-sm" ng-options="ctr.username for ctr in userArray" ng-change="GetValue(ctrl.selUser)">
 										<option value="">--Select--</option>
 									</select>
 						
@@ -54,7 +55,7 @@
                 </div>
                 </div>
                 </div>
-                 <!--    {{groupList}}-->
+                    {{userArray}}
                 <!-- Default panel contents -->
               <div class="panel-heading"><span class="lead">List of Groups </span></div>
           
@@ -74,6 +75,9 @@
                        
                               <td><span ng-bind="u.id"></span></td>
                               <td><span ng-bind="u.name"></span></td>
+                                <td ng-repeat="user in u.users">
+                                <span ng-bind="user.username"></span>,
+                                </td>
                               <td>
                               <button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success custom-width">Edit</button>  <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-danger custom-width">Remove</button>
                               </td>

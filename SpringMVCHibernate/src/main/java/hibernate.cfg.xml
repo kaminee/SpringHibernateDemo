@@ -22,8 +22,6 @@
 <!--         <property name="hibernate.hbm2ddl.auto">create-drop</property> -->
      <mapping class="com.journaldev.spring.model.Country"/>
      <mapping class="com.journaldev.spring.model.User"/>
-<!--      <mapping class="com.journaldev.spring.model.Employee"/> -->
-<!--  	<mapping class="com.journaldev.spring.model.Meeting"/> -->
  	 	<mapping class="com.journaldev.spring.model.Group"/>
  	
 <!--      <mapping class="com.journaldev.spring.model.Shop"/>  -->

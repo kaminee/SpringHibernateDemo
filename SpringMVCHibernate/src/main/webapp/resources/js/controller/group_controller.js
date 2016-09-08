@@ -13,14 +13,15 @@ angular.module('myUserApp').controller('GroupController', ['$scope', 'GroupServi
     self.reset = reset;
 	console.log("\n\t *****");
 //	$scope.users=[];
-
+	$scope.countusers=[];
     $scope.groupArray = [];
+    $scope.usersarrayele = [];
     $http({
             method: 'GET',
             url: 'http://localhost:8080/SpringMVCHibernate/group/fetch'
            
         }).success(function (result) {
-        	console.log("\n\t resule"+result);
+//        	console.log("\n\t resule"+result);
         $scope.groupArray = result;
     });
 
@@ -31,7 +32,7 @@ angular.module('myUserApp').controller('GroupController', ['$scope', 'GroupServi
         url: 'http://localhost:8080/SpringMVCHibernate/users'
        
     }).success(function (result) {
-    	console.log("\n\t resule"+result);
+//    	console.log("\n\t resule"+result);
     $scope.userArray = result;
 });
     
@@ -41,30 +42,31 @@ angular.module('myUserApp').controller('GroupController', ['$scope', 'GroupServi
     
     $scope.GetValue = function (count) {
     	console.log("count======"+count)
-    	 $scope.id = count.id;
+    	console.log("count======"+count.id)
+//    	 $scope.countusers = count.id;
+    	$scope.usersarrayele.push(count);
+    	 $scope.countusers=count;
+    		console.log("$scope.usersarrayele======"+$scope.usersarrayele)
+//    	 console.log("scope.name = "+count.name);
     	 
-    	 console.log("scope.name = "+count.name);
-    	 
-    	 console.log("\n\t $scope.id "+$scope.id+"\t ==="+$scope.name);
+//    	 console.log("\n\t $scope.id "+$scope.id+"\t ==="+$scope.name);
     	 
     	}
     function fetchAllGroups(){
-    	console.log("\n\t fetchAllGroups");
     	GroupService.fetchAllGroups()
             .then(
             function(d) {
             	
             
-            	console.log("\n\t fetchAllGroups"+d.length);
 //            	$scope.userN=d[0].username;
             	
             	self.groups = d;
             	$scope.groupList=angular.copy(d);
-            	console.log("\n\t self.users-->"+self.group.length+"\t angular.copy---->"+angular.copy(d));
+//            	console.log("\n\t self.users-->"+self.group.length+"\t angular.copy---->"+angular.copy(d));
             	
             	$scope.temp = angular.fromJson(d);
             	
-            	console.log("\n\t $scope.temp-->"+$scope.temp.country);
+//            	console.log("\n\t $scope.temp-->"+$scope.temp.country);
             	var len =d.length;
             	$scope.leng=len;
             },
@@ -76,22 +78,21 @@ angular.module('myUserApp').controller('GroupController', ['$scope', 'GroupServi
 
     
     function fetchAllUsersGroups(){
-    	console.log("\n\t fetchAllUsersGroups");
     	GroupService.fetchAllUsersGroups()
             .then(
             function(d) {
             	
             
-            	console.log("\n\t fetchAllUsersGroups"+d.length);
+//            	console.log("\n\t fetchAllUsersGroups"+d.length);
 //            	$scope.userN=d[0].username;
             	
             	self.groups = d;
             	$scope.groupList=angular.copy(d);
-            	console.log("\n\t self.usersgroups-->"+self.group.length+"\t angular.copy---->"+angular.copy(d));
+//            	console.log("\n\t self.usersgroups-->"+self.group.length+"\t angular.copy---->"+angular.copy(d));
             	
             	$scope.temp = angular.fromJson(d);
             	
-            	console.log("\n\t $scope.temp-->"+$scope.temp.country);
+//            	console.log("\n\t $scope.temp-->"+$scope.temp.country);
             	var len =d.length;
             	$scope.leng=len;
             },
@@ -102,8 +103,9 @@ angular.module('myUserApp').controller('GroupController', ['$scope', 'GroupServi
     }
 
     function createGroup(group){
-    	group.users=[{id:group.users}];
-    	console.log("\n\t to create group requset--->"+group.users);
+    	console.log("Selected Value: " +$scope.countusers + "\nSelected Text: "+$scope.usersarrayele );
+
+    		group.users=$scope.usersarrayele;
 
     	GroupService.createGroup(group)
             .then(
@@ -115,6 +117,10 @@ angular.module('myUserApp').controller('GroupController', ['$scope', 'GroupServi
     }
 
     function updateGroup(group, id){
+		group.users=$scope.usersarrayele;
+
+//    	group.users=[{id:group.usersarr}];
+    	console.log("\n\t\t ---group-->"+group+"\t\t group.users-->"+group.users)
     	GroupService.updateGroup(group, id)
             .then(
             		fetchAllGroups,
@@ -160,9 +166,11 @@ angular.module('myUserApp').controller('GroupController', ['$scope', 'GroupServi
 
     function edit(id){
         console.log('id to be edited', id);
+        console.log('id to be self.groups', self.groups);
+
         for(var i = 0; i < self.groups.length; i++){
             if(self.groups[i].id === id) {
-                self.group = angular.copy(self.groups[i]);
+                self.selUser = angular.copy(self.groups[i]);
                 break;
             }
         }

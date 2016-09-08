@@ -15,7 +15,7 @@ angular.module('myUserApp').factory('GroupService', ['$http', '$q', function($ht
     return factory;
 
     function fetchAllGroups() {
-    	console.log("\n\t fetchAllGroups service 1");
+//    	console.log("\n\t fetchAllGroups service 1");
         var deferred = $q.defer();
         $http.get(REST_SERVICE_URI+"group/")
             .then(

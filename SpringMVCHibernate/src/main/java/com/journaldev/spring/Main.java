@@ -1,5 +1,10 @@
 package com.journaldev.spring;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -52,7 +57,7 @@ public class Main {
         session.save(employee1);
 //        session.save(employee2);
 */        
-        Country c=new Country();
+     /*   Country c=new Country();
         c.setCountryId(1);
         Group groupAdmin = new Group("Test Group");
 //        User newUser=userDao.findById(13);
@@ -62,7 +67,8 @@ public class Main {
         
         
         groupAdmin.getUsers().add(user1);
-        
+         session.save(groupAdmin);
+        */
         
        /* User user = (User) session.get(User.class, 15);
         Group grp = (Group) session.get(Group.class, 25l);
@@ -73,11 +79,24 @@ public class Main {
         System.out.println("\n\t ===user==>"+user.getUsername()+"\t =="+grp.getUsers());*/
         
 //        groupAdmin.addUser(user1);
-         
-         
+        Group groupAdmin = new Group();
+        groupAdmin.setId(25);
+        groupAdmin.setName("Kaminee Grp");
+        Country c=new Country();
+        c.setCountryId(1);
+         Set<User> userList=new HashSet<User>();
+         User user1 = new User();
+         user1.setId(3); //        user1.setUsername("HImanci"); //        user1.setEmail("him@mail.com");
+         user1.setCountry(c); //   
       
          
-        session.save(groupAdmin);
+         User user2 = new User();
+         user2.setId(5); //        user1.setUsername("HImanci"); //        user1.setEmail("him@mail.com");
+         user2.setCountry(c); //   
+         groupAdmin.getUsers().add(user1);
+         groupAdmin.getUsers().add(user2);
+
+         session.update(groupAdmin);
         session.getTransaction().commit();
         session.close();
     }

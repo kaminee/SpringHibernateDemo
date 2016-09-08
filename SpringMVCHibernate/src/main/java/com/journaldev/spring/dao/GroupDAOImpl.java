@@ -1,6 +1,8 @@
 package com.journaldev.spring.dao;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.journaldev.spring.model.Group;
 import com.journaldev.spring.model.User;
+
 
 //@Transactional 
 @SuppressWarnings("unchecked")
@@ -99,10 +102,16 @@ public class GroupDAOImpl implements GroupDAO {
 	@Transactional
 	public void updateGroup(Group group) {
 		Session sessionOne = sessionFactory.openSession();
+
+		try {
 		sessionOne.beginTransaction();
+		
 		sessionOne.update(group);
 		sessionOne.getTransaction().commit();
-
+		} catch (HibernateException e) {
+			e.printStackTrace();
+//			sessionOne.getTransaction().rollback();
+		}
 	}
 
 	@Override

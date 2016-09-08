@@ -35,7 +35,7 @@ public class Country {
 //	@OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
 //	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
-	@Cascade(CascadeType.SAVE_UPDATE)
+//	@Cascade(CascadeType.SAVE_UPDATE)
 	@Fetch(FetchMode.JOIN)
     @BatchSize(size = 10)
 	@JsonIgnore

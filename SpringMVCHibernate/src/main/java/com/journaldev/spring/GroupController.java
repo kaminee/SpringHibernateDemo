@@ -1,6 +1,8 @@
 package com.journaldev.spring;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -72,7 +74,8 @@ public class GroupController {
 		
 	 
 	  @RequestMapping(value = "", method = RequestMethod.POST, produces="application/json",consumes ="application/json")
-	    public ResponseEntity<Void> createGroup(@RequestBody Group group,    UriComponentsBuilder ucBuilder,HttpServletRequest request) {
+	  @ResponseBody
+	    public ResponseEntity<Void> createGroup(@RequestBody Group group,UriComponentsBuilder ucBuilder,HttpServletRequest request) {
 		 logger.info("\n\n\t ==getUsers=====>"+group.getUsers()+"\t name-"+group.getName()+"\t group-->"+group);		  
 		 try{
 			 Group groupAdmin =null;
@@ -107,19 +110,27 @@ public class GroupController {
 	     
 	    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	    public ResponseEntity<Group> updateUser(@PathVariable("id") long id, @RequestBody Group group) {
-	        System.out.println("Updating User " + id);
-	         
-	        Group currentGroup = groupDAO.findById(id);
-	        System.out.println("currentUser " + currentGroup+"\t -->"+group.getName());
+	        System.out.println("Updating Group " + id);
+//	        group.getUsers().forEach(System.out::print);
+//	        System.out.println("currentGroup " + currentGroup+"\t -->"+group.getName());
+	      /*  Group currentGroup = groupDAO.findById(id);
+	        System.out.println("currentGroup " + currentGroup+"\t -->"+group.getName());
 	        if (currentGroup==null) {
-	            System.out.println("User with id " + id + " not found");
+	            System.out.println("Group with id " + id + " not found");
 	            return new ResponseEntity<Group>(HttpStatus.NOT_FOUND);
-	        }
-	 
-	        currentGroup.setName(group.getName());
+	        }*/
+	       /* Group currentGroup = new Group();
+	        Set<User> userSet=new HashSet<User>();
+			userSet=group.getUsers();
+			for (User user : userSet) {
+				currentGroup.getUsers().add(user);
+				System.out.println("\n\t usernae -=-->"+user.getUsername());
+			}
+	        currentGroup.setName(group.getName());*/
+	        
 	         
-	        groupDAO.updateGroup(currentGroup);
-	        return new ResponseEntity<Group>(currentGroup, HttpStatus.OK);
+	        groupDAO.updateGroup(group);
+	        return new ResponseEntity<Group>(group, HttpStatus.OK);
 	    }
 	    
 	    
